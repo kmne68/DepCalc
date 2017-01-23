@@ -15,10 +15,19 @@ package depcalc;
  */
 public class Asset {
     
+    // Globals
     private String assetName;
     private double assetCost;
     private double salvageValue;
     private int lifeOfItem;
+    
+    // Data arrays for depreciation table
+    private double[][] beginningBalance;
+    private double[][] annualDepreciation;
+    private double[][] endingBalance;
+    
+    private boolean built;
+    private String  errorMessage;  // what is this?
     
     public Asset() {
         
@@ -26,13 +35,14 @@ public class Asset {
     
     public Asset(String name, double cost, double salvage, int life) {
         
+        this.assetName = name;
         this.assetCost = cost;
         this.salvageValue = salvage;
         this.lifeOfItem = life;
     }
     
     
-    public double getAnnualDep() {
+    public double getAnnualDepreciation() {
         
         double annualDepreciation = 0;
         
@@ -41,7 +51,7 @@ public class Asset {
     } // end getAnnualDep()
     
     
-    public double getAnnualDep(int y) {
+    public double getAnnualDepreciation(int y) {
         
         double annualDepreciation = 0;
         
@@ -49,7 +59,7 @@ public class Asset {
     } // end getAnnualDep(y)
     
     
-    public double getBegBal(int y, char m) {
+    public double getBeginningBalance(int y, char m) {
          
         double beginningBalance = 0;
         
@@ -57,10 +67,85 @@ public class Asset {
     } // end getBegBal()
     
     
-    public double getEndBal(int y, char m) {
+    public double getEndingBalalance(int y, char m) {
         
         double endingBalance = 0;
         
         return endingBalance;
     }
+
+    public String getAssetName() {
+        return assetName;
+    }
+
+    public double getAssetCost() {
+        return assetCost;
+    }
+    
+    public String getErrorMessage() {
+        return "You have entered invalid data.";
+    }
+
+    public double getSalvageValue() {
+        return salvageValue;
+    }
+
+    public int getLifeOfItem() {
+        return lifeOfItem;
+    }
+    
+    
+    // Validate data
+    public boolean isValid() {
+        
+        boolean valid = false;
+        
+        System.out.println("validName " + assetName + "\n" + assetCost + "\n" + salvageValue + "\n" + lifeOfItem);
+        
+        if(assetName != "") {}
+        else {
+            errorMessage = "You have not entered a valid name.";
+        }
+        
+        if(assetCost > 0) {
+            
+        }
+        else {
+            errorMessage = "The asset's cost must be a positive number";
+        }
+        
+        if(salvageValue > 0 && salvageValue < assetCost) {
+            
+        }
+        else {
+            errorMessage = "The salvage value must be less than the asset's cost.";
+        }
+        
+        if(lifeOfItem > 0) {
+            valid = true;
+        }
+        else {
+            errorMessage = "The life of the asset must be a postive integer.";
+        } 
+        
+        return valid;
+        
+    }
+
+    public void setAssetName(String assetName) {
+        this.assetName = assetName;
+    }
+
+    public void setAssetCost(double assetCost) {
+        this.assetCost = assetCost;
+    }
+
+    public void setSalvageValue(double salvageValue) {
+        this.salvageValue = salvageValue;
+    }
+
+    public void setLifeOfItem(int lifeOfItem) {
+        this.lifeOfItem = lifeOfItem;
+    }
+
 }

@@ -347,19 +347,21 @@ public class DepCalcView extends FrameView {
      */
     private void btn_calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calculateActionPerformed
         
-        
-        
+        boolean valid;
         String assetName = txt_assetName.getText();
         double assetCost = Double.parseDouble(txt_cost.getText());
         double salvageValue = Double.parseDouble(txt_salvageValue.getText());
         int lifeOfItem = Integer.parseInt(txt_life.getText());
         
-        Asset asset = new Asset();
+        Asset asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
+        
+        valid = asset.isValid();
         
         System.out.println("name " + assetName);
         System.out.println("cost " + assetCost);
         System.out.println("salvage " + salvageValue);
         System.out.println("life " + lifeOfItem);
+        System.out.println("valid " + valid);
     }//GEN-LAST:event_btn_calculateActionPerformed
 
 
