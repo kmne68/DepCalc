@@ -79,6 +79,7 @@ public class DepCalcView extends FrameView {
                 }
             }
         });
+        mainPanel.setVisible(true);
     }
 
     @Action
@@ -101,20 +102,20 @@ public class DepCalcView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        lbl_assetName = new javax.swing.JLabel();
+        lbl_cost = new javax.swing.JLabel();
+        lbl_salvageValue = new javax.swing.JLabel();
+        lbl_life = new javax.swing.JLabel();
+        txt_assetName = new javax.swing.JTextField();
+        txt_cost = new javax.swing.JTextField();
+        txt_salvageValue = new javax.swing.JTextField();
+        txt_life = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        rdo_straightLine = new javax.swing.JRadioButton();
+        rdo_doubleDeclining = new javax.swing.JRadioButton();
+        btn_calculate = new javax.swing.JButton();
+        pnl_schedule = new javax.swing.JPanel();
+        btn_clear = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -129,108 +130,118 @@ public class DepCalcView extends FrameView {
         mainPanel.setName("mainPanel"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(depcalc.DepCalcApp.class).getContext().getResourceMap(DepCalcView.class);
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
+        lbl_assetName.setText(resourceMap.getString("lbl_assetName.text")); // NOI18N
+        lbl_assetName.setName("lbl_assetName"); // NOI18N
 
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
+        lbl_cost.setText(resourceMap.getString("lbl_cost.text")); // NOI18N
+        lbl_cost.setName("lbl_cost"); // NOI18N
 
-        jLabel3.setText(resourceMap.getString("jLabel3.text")); // NOI18N
-        jLabel3.setName("jLabel3"); // NOI18N
+        lbl_salvageValue.setText(resourceMap.getString("lbl_salvageValue.text")); // NOI18N
+        lbl_salvageValue.setName("lbl_salvageValue"); // NOI18N
 
-        jLabel4.setText(resourceMap.getString("jLabel4.text")); // NOI18N
-        jLabel4.setName("jLabel4"); // NOI18N
+        lbl_life.setText(resourceMap.getString("lbl_life.text")); // NOI18N
+        lbl_life.setName("lbl_life"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("txt_assetName.text")); // NOI18N
-        jTextField1.setName("txt_assetName"); // NOI18N
-        jTextField1.setPreferredSize(new java.awt.Dimension(60, 20));
+        txt_assetName.setText(resourceMap.getString("txt_assetName.text")); // NOI18N
+        txt_assetName.setName("txt_assetName"); // NOI18N
+        txt_assetName.setPreferredSize(new java.awt.Dimension(60, 20));
 
-        jTextField2.setText(resourceMap.getString("txt_Cost.text")); // NOI18N
-        jTextField2.setToolTipText(resourceMap.getString("txt_Cost.toolTipText")); // NOI18N
-        jTextField2.setName("txt_Cost"); // NOI18N
-        jTextField2.setPreferredSize(new java.awt.Dimension(60, 20));
+        txt_cost.setText(resourceMap.getString("txt_Cost.text")); // NOI18N
+        txt_cost.setToolTipText(resourceMap.getString("txt_Cost.toolTipText")); // NOI18N
+        txt_cost.setName("txt_Cost"); // NOI18N
+        txt_cost.setPreferredSize(new java.awt.Dimension(60, 20));
 
-        jTextField3.setText(resourceMap.getString("txt_salvageValue.text")); // NOI18N
-        jTextField3.setName("txt_salvageValue"); // NOI18N
-        jTextField3.setPreferredSize(new java.awt.Dimension(60, 20));
-        jTextField3.setRequestFocusEnabled(false);
+        txt_salvageValue.setText(resourceMap.getString("txt_salvageValue.text")); // NOI18N
+        txt_salvageValue.setName("txt_salvageValue"); // NOI18N
+        txt_salvageValue.setPreferredSize(new java.awt.Dimension(60, 20));
+        txt_salvageValue.setRequestFocusEnabled(false);
 
-        jTextField4.setText(resourceMap.getString("txt_life.text")); // NOI18N
-        jTextField4.setName("txt_life"); // NOI18N
-        jTextField4.setPreferredSize(new java.awt.Dimension(60, 20));
-        jTextField4.setRequestFocusEnabled(false);
+        txt_life.setText(resourceMap.getString("txt_life.text")); // NOI18N
+        txt_life.setName("txt_life"); // NOI18N
+        txt_life.setPreferredSize(new java.awt.Dimension(60, 20));
+        txt_life.setRequestFocusEnabled(false);
 
         jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
         jLabel5.setName("jLabel5"); // NOI18N
 
-        jRadioButton1.setText(resourceMap.getString("jRadioButton1.text")); // NOI18N
-        jRadioButton1.setName("jRadioButton1"); // NOI18N
+        rdo_straightLine.setText(resourceMap.getString("rdo_straightLine.text")); // NOI18N
+        rdo_straightLine.setName("rdo_straightLine"); // NOI18N
 
-        jRadioButton2.setText(resourceMap.getString("jRadioButton2.text")); // NOI18N
-        jRadioButton2.setName("jRadioButton2"); // NOI18N
+        rdo_doubleDeclining.setText(resourceMap.getString("rdo_doubleDeclining.text")); // NOI18N
+        rdo_doubleDeclining.setName("rdo_doubleDeclining"); // NOI18N
 
-        jButton1.setText(resourceMap.getString("btn_calculate.text")); // NOI18N
-        jButton1.setName("btn_calculate"); // NOI18N
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(depcalc.DepCalcApp.class).getContext().getActionMap(DepCalcView.class, this);
+        btn_calculate.setAction(actionMap.get("calculateDepreciation")); // NOI18N
+        btn_calculate.setText(resourceMap.getString("btn_calculate.text")); // NOI18N
+        btn_calculate.setName("btn_calculate"); // NOI18N
+        btn_calculate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_calculateActionPerformed(evt);
+            }
+        });
 
-        jPanel1.setName("jPanel1"); // NOI18N
+        pnl_schedule.setName("pnl_schedule"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnl_scheduleLayout = new javax.swing.GroupLayout(pnl_schedule);
+        pnl_schedule.setLayout(pnl_scheduleLayout);
+        pnl_scheduleLayout.setHorizontalGroup(
+            pnl_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnl_scheduleLayout.setVerticalGroup(
+            pnl_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 309, Short.MAX_VALUE)
         );
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
+        btn_clear.setText(resourceMap.getString("btn_clear.text")); // NOI18N
+        btn_clear.setName("btn_clear"); // NOI18N
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(97, 97, 97)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(91, 91, 91)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addGap(0, 74, Short.MAX_VALUE)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(111, 111, 111)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(79, 79, 79)
-                        .addComponent(jButton2))
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(20, 20, 20))
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(pnl_schedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_assetName)
+                                    .addComponent(txt_assetName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(60, 60, 60)
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_cost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lbl_cost))
+                                        .addGap(66, 66, 66)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                                .addComponent(lbl_salvageValue)
+                                                .addGap(66, 66, 66)
+                                                .addComponent(lbl_life))
+                                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(rdo_doubleDeclining)
+                                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                                        .addComponent(txt_salvageValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(73, 73, 73)
+                                                        .addComponent(txt_life, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(74, 74, 74)
+                                                .addComponent(btn_clear))))
+                                    .addComponent(rdo_straightLine)))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(264, 264, 264)))
+                        .addGap(0, 84, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jRadioButton1)
-                .addGap(85, 85, 85)
-                .addComponent(jRadioButton2)
-                .addGap(267, 267, 267))
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(356, 356, 356)
-                .addComponent(jLabel5)
+                .addGap(297, 297, 297)
+                .addComponent(btn_calculate)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -238,27 +249,27 @@ public class DepCalcView extends FrameView {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(lbl_assetName, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_cost)
+                    .addComponent(lbl_salvageValue)
+                    .addComponent(lbl_life))
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(43, 43, 43)
+                    .addComponent(txt_assetName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_salvageValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_life, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_clear))
+                .addGap(39, 39, 39)
                 .addComponent(jLabel5)
-                .addGap(41, 41, 41)
+                .addGap(54, 54, 54)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1))
+                    .addComponent(rdo_straightLine)
+                    .addComponent(rdo_doubleDeclining))
+                .addGap(26, 26, 26)
+                .addComponent(btn_calculate)
                 .addGap(38, 38, 38)
-                .addComponent(jButton1)
-                .addGap(35, 35, 35)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnl_schedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -267,7 +278,6 @@ public class DepCalcView extends FrameView {
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(depcalc.DepCalcApp.class).getContext().getActionMap(DepCalcView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
@@ -298,7 +308,7 @@ public class DepCalcView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
@@ -325,27 +335,55 @@ public class DepCalcView extends FrameView {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    /**
+     * 
+     * @param evt 
+     *  
+     * private String assetName;
+       private double assetCost;
+       private double salvageValue;
+       private int lifeOfItem;
+     */
+    private void btn_calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calculateActionPerformed
+        
+        
+        
+        String assetName = txt_assetName.getText();
+        double assetCost = Double.parseDouble(txt_cost.getText());
+        double salvageValue = Double.parseDouble(txt_salvageValue.getText());
+        int lifeOfItem = Integer.parseInt(txt_life.getText());
+        
+        Asset asset = new Asset();
+        
+        System.out.println("name " + assetName);
+        System.out.println("cost " + assetCost);
+        System.out.println("salvage " + salvageValue);
+        System.out.println("life " + lifeOfItem);
+    }//GEN-LAST:event_btn_calculateActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton btn_calculate;
+    private javax.swing.JButton btn_clear;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lbl_assetName;
+    private javax.swing.JLabel lbl_cost;
+    private javax.swing.JLabel lbl_life;
+    private javax.swing.JLabel lbl_salvageValue;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JPanel pnl_schedule;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JRadioButton rdo_doubleDeclining;
+    private javax.swing.JRadioButton rdo_straightLine;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JTextField txt_assetName;
+    private javax.swing.JTextField txt_cost;
+    private javax.swing.JTextField txt_life;
+    private javax.swing.JTextField txt_salvageValue;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
