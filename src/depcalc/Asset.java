@@ -8,69 +8,63 @@ package depcalc;
 /**
  *
  * @author Keith
- * 
- * Beginning Balance in year 1 equals cost.
- * Annual depreciation is rate * cost.
- * 
+ *
+ * Beginning Balance in year 1 equals cost. Annual depreciation is rate * cost.
+ *
  */
 public class Asset {
-    
+
     // Globals
     private String assetName;
     private double assetCost;
     private double salvageValue;
     private int lifeOfItem;
-    
+
     // Data arrays for depreciation table
     private double[][] beginningBalance;
     private double[][] annualDepreciation;
     private double[][] endingBalance;
-    
+
     private boolean built;
-    private String  errorMessage;  // what is this?
-    
+    private String errorMessage;  // what is this?
+
     public Asset() {
-        
+
     }
-    
+
     public Asset(String name, double cost, double salvage, int life) {
-        
+
         this.assetName = name;
         this.assetCost = cost;
         this.salvageValue = salvage;
         this.lifeOfItem = life;
     }
-    
-    
+
     public double getAnnualDepreciation() {
-        
+
         double annualDepreciation = 0;
-        
-        
-        return annualDepreciation;        
+
+        return annualDepreciation;
     } // end getAnnualDep()
-    
-    
+
     public double getAnnualDepreciation(int y) {
-        
+
         double annualDepreciation = 0;
-        
+
         return annualDepreciation;
     } // end getAnnualDep(y)
-    
-    
+
     public double getBeginningBalance(int y, char m) {
-         
+
         double beginningBalance = 0;
-        
-        return beginningBalance;        
+
+        return beginningBalance;
     } // end getBegBal()
-    
-    
+
     public double getEndingBalalance(int y, char m) {
-        
+
         double endingBalance = 0;
-        
+
         return endingBalance;
     }
 
@@ -81,9 +75,9 @@ public class Asset {
     public double getAssetCost() {
         return assetCost;
     }
-    
+
     public String getErrorMessage() {
-        return "You have entered invalid data.";
+        return errorMessage;
     }
 
     public double getSalvageValue() {
@@ -93,43 +87,34 @@ public class Asset {
     public int getLifeOfItem() {
         return lifeOfItem;
     }
-    
-    
+
     // Validate data
     public boolean isValid() {
-        
+
         boolean valid = false;
-        
+
         System.out.println("validName " + assetName + "\n" + assetCost + "\n" + salvageValue + "\n" + lifeOfItem);
-        
-        if(assetName != "") {}
-        else {
+
+        if(assetName != null && !assetName.isEmpty()) {
+            if (assetCost > 0) {
+                if (salvageValue > 0 && salvageValue < assetCost) {
+                    if (lifeOfItem > 0) {
+                        valid = true;
+                    } else {
+                        errorMessage = "The life of the asset must be a postive integer.";
+                    }
+                } else {
+                    errorMessage = "The salvage value must be greater than zero and less than the asset's cost.";
+                }
+            } else {
+                errorMessage = "The asset's cost must be a positive number";
+            }
+        } else {
             errorMessage = "You have not entered a valid name.";
         }
-        
-        if(assetCost > 0) {
-            
-        }
-        else {
-            errorMessage = "The asset's cost must be a positive number";
-        }
-        
-        if(salvageValue > 0 && salvageValue < assetCost) {
-            
-        }
-        else {
-            errorMessage = "The salvage value must be less than the asset's cost.";
-        }
-        
-        if(lifeOfItem > 0) {
-            valid = true;
-        }
-        else {
-            errorMessage = "The life of the asset must be a postive integer.";
-        } 
-        
+
         return valid;
-        
+
     }
 
     public void setAssetName(String assetName) {

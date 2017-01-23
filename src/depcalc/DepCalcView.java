@@ -362,6 +362,7 @@ public class DepCalcView extends FrameView {
         System.out.println("salvage " + salvageValue);
         System.out.println("life " + lifeOfItem);
         System.out.println("valid " + valid);
+        System.out.println(asset.getErrorMessage());
     }//GEN-LAST:event_btn_calculateActionPerformed
 
 
