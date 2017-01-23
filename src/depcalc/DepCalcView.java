@@ -25,6 +25,10 @@ public class DepCalcView extends FrameView {
         super(app);
 
         initComponents();
+        
+        // add buttons to radio group
+        methodGroup.add(rdo_straightLine);
+        methodGroup.add(rdo_doubleDeclining);
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -81,6 +85,8 @@ public class DepCalcView extends FrameView {
         });
         mainPanel.setVisible(true);
     }
+    
+    
 
     @Action
     public void showAboutBox() {
@@ -126,6 +132,7 @@ public class DepCalcView extends FrameView {
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
+        methodGroup = new javax.swing.ButtonGroup();
 
         mainPanel.setName("mainPanel"); // NOI18N
 
@@ -249,7 +256,7 @@ public class DepCalcView extends FrameView {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_assetName, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_assetName)
                     .addComponent(lbl_cost)
                     .addComponent(lbl_salvageValue)
                     .addComponent(lbl_life))
@@ -347,11 +354,18 @@ public class DepCalcView extends FrameView {
      */
     private void btn_calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calculateActionPerformed
         
+        int method = 0; // local method to select calculation method
         boolean valid;
         String assetName = txt_assetName.getText();
         double assetCost = Double.parseDouble(txt_cost.getText());
         double salvageValue = Double.parseDouble(txt_salvageValue.getText());
         int lifeOfItem = Integer.parseInt(txt_life.getText());
+        
+        if(rdo_straightLine.isSelected()) {
+            method = 0;
+        } else {
+            method = 1;
+        }
         
         Asset asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
         
@@ -363,6 +377,7 @@ public class DepCalcView extends FrameView {
         System.out.println("life " + lifeOfItem);
         System.out.println("valid " + valid);
         System.out.println(asset.getErrorMessage());
+        System.out.println("method " + method);
     }//GEN-LAST:event_btn_calculateActionPerformed
 
 
@@ -376,6 +391,7 @@ public class DepCalcView extends FrameView {
     private javax.swing.JLabel lbl_salvageValue;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.ButtonGroup methodGroup;
     private javax.swing.JPanel pnl_schedule;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JRadioButton rdo_doubleDeclining;
