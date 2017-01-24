@@ -368,7 +368,10 @@ public class DepCalcView extends FrameView {
         }
         
         Asset asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
-        
+        asset.getAnnualDepreciation();
+  //      asset.getAnnualDepreciation(lifeOfItem);
+  //      asset.getBeginningBalance(lifeOfItem, method);
+  //      asset.getEndingBalance(lifeOfItem, method);
         valid = asset.isValid();
         
         System.out.println("name " + assetName);

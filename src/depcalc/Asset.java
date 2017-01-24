@@ -18,7 +18,7 @@ public class Asset {
     private String assetName;
     private double assetCost;
     private double salvageValue;
-    private int lifeOfItem;
+    private int lifeOfAsset;
 
     // Data arrays for depreciation table
     private double[][] beginningBalance;
@@ -37,31 +37,54 @@ public class Asset {
         this.assetName = name;
         this.assetCost = cost;
         this.salvageValue = salvage;
-        this.lifeOfItem = life;
+        this.lifeOfAsset = life;
     }
 
     public double getAnnualDepreciation() {
 
         double annualDepreciation = 0;
+        
+        annualDepreciation = assetCost - salvageValue / lifeOfAsset;
+        
+        System.out.println("annual depreciation = " + annualDepreciation);
 
         return annualDepreciation;
     } // end getAnnualDep()
 
     public double getAnnualDepreciation(int y) {
 
-        double annualDepreciation = 0;
+        double annualDepreciation = 0.0;
+        double depreciationRate = 0.0;
+        
+        depreciationRate = 2 * (getAnnualDepreciation() / assetCost);
 
+        annualDepreciation = getBeginningBalance(lifeOfAsset, 1) * depreciationRate;
+        
+        System.out.println("annualDepreciation = " + annualDepreciation);
+        
         return annualDepreciation;
     } // end getAnnualDep(y)
 
-    public double getBeginningBalance(int y, char m) {
+    
+    public double getBeginningBalance(int y, int m) {
 
         double beginningBalance = 0;
-
+        
+        if ((m == 1) && (y == 0)) {
+            beginningBalance = assetCost;
+        } else if (((m == 1) && (y != 0))){
+            beginningBalance = getEndingBalance(y, m) - getAnnualDepreciation(y);
+        } else if ((m == 0) && (y == 0)) {
+            beginningBalance = assetCost;
+        } else {
+            beginningBalance = getEndingBalance(y, m) - getAnnualDepreciation(y);
+        }
+        System.out.println("beginning balance = " + beginningBalance);
         return beginningBalance;
     } // end getBegBal()
 
-    public double getEndingBalalance(int y, char m) {
+    
+    public double getEndingBalance(int y, int m) {
 
         double endingBalance = 0;
 
@@ -85,7 +108,7 @@ public class Asset {
     }
 
     public int getLifeOfItem() {
-        return lifeOfItem;
+        return lifeOfAsset;
     }
 
     // Validate data
@@ -93,12 +116,12 @@ public class Asset {
 
         boolean valid = false;
 
-        System.out.println("validName " + assetName + "\n" + assetCost + "\n" + salvageValue + "\n" + lifeOfItem);
+        System.out.println("validName " + assetName + "\n" + assetCost + "\n" + salvageValue + "\n" + lifeOfAsset);
 
         if(assetName != null && !assetName.isEmpty()) {
             if (assetCost > 0) {
                 if (salvageValue > 0 && salvageValue < assetCost) {
-                    if (lifeOfItem > 0) {
+                    if (lifeOfAsset > 0) {
                         valid = true;
                     } else {
                         errorMessage = "The life of the asset must be a postive integer.";
@@ -130,7 +153,7 @@ public class Asset {
     }
 
     public void setLifeOfItem(int lifeOfItem) {
-        this.lifeOfItem = lifeOfItem;
+        this.lifeOfAsset = lifeOfItem;
     }
 
 }
