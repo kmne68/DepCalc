@@ -40,14 +40,19 @@ public class Asset {
         this.lifeOfAsset = life;
     }
 
+    // Calculate annual depreciation with the straight line method
     public double getAnnualDepreciation() {
 
+        int year = 1;
         double annualDepreciation = 0;
-        
-        annualDepreciation = assetCost - salvageValue / lifeOfAsset;
-        
-        System.out.println("annual depreciation = " + annualDepreciation);
 
+        if (year == 1) {
+
+        }
+
+        annualDepreciation = (assetCost - salvageValue) / lifeOfAsset;
+
+        //      System.out.println("annual depreciation = " + annualDepreciation);
         return annualDepreciation;
     } // end getAnnualDep()
 
@@ -55,38 +60,34 @@ public class Asset {
 
         double annualDepreciation = 0.0;
         double depreciationRate = 0.0;
-        
+
         depreciationRate = 2 * (getAnnualDepreciation() / assetCost);
 
         annualDepreciation = getBeginningBalance(lifeOfAsset, 1) * depreciationRate;
-        
+
         System.out.println("annualDepreciation = " + annualDepreciation);
-        
+
         return annualDepreciation;
     } // end getAnnualDep(y)
 
-    
     public double getBeginningBalance(int y, int m) {
 
         double beginningBalance = 0;
+        int year = y - 1;
+        beginningBalance = assetCost - (getAnnualDepreciation() * year);
         
-        if ((m == 1) && (y == 0)) {
-            beginningBalance = assetCost;
-        } else if (((m == 1) && (y != 0))){
-            beginningBalance = getEndingBalance(y, m) - getAnnualDepreciation(y);
-        } else if ((m == 0) && (y == 0)) {
-            beginningBalance = assetCost;
-        } else {
-            beginningBalance = getEndingBalance(y, m) - getAnnualDepreciation(y);
-        }
-        System.out.println("beginning balance = " + beginningBalance);
         return beginningBalance;
     } // end getBegBal()
 
-    
     public double getEndingBalance(int y, int m) {
 
         double endingBalance = 0;
+
+        if ((m == 1) && (y == 1)) {
+            endingBalance = assetCost;
+        } else {
+            endingBalance = assetCost - (getAnnualDepreciation() * y);
+        }
 
         return endingBalance;
     }
@@ -118,7 +119,7 @@ public class Asset {
 
         System.out.println("validName " + assetName + "\n" + assetCost + "\n" + salvageValue + "\n" + lifeOfAsset);
 
-        if(assetName != null && !assetName.isEmpty()) {
+        if (assetName != null && !assetName.isEmpty()) {
             if (assetCost > 0) {
                 if (salvageValue > 0 && salvageValue < assetCost) {
                     if (lifeOfAsset > 0) {

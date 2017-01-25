@@ -26,6 +26,9 @@ public class DepCalcView extends FrameView {
 
         initComponents();
         
+        // Schedule column names
+        String[] columnNames = {"Year", "Asset Name", "Beginning Value", "Annual Depreciation", "Ending Value"};
+        
         // add buttons to radio group
         methodGroup.add(rdo_straightLine);
         methodGroup.add(rdo_doubleDeclining);
@@ -116,12 +119,13 @@ public class DepCalcView extends FrameView {
         txt_cost = new javax.swing.JTextField();
         txt_salvageValue = new javax.swing.JTextField();
         txt_life = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        lbl_selectMethod = new javax.swing.JLabel();
         rdo_straightLine = new javax.swing.JRadioButton();
         rdo_doubleDeclining = new javax.swing.JRadioButton();
         btn_calculate = new javax.swing.JButton();
-        pnl_schedule = new javax.swing.JPanel();
         btn_clear = new javax.swing.JButton();
+        pnl_schedule = new javax.swing.JScrollPane();
+        tbl_schedule = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -168,8 +172,8 @@ public class DepCalcView extends FrameView {
         txt_life.setPreferredSize(new java.awt.Dimension(60, 20));
         txt_life.setRequestFocusEnabled(false);
 
-        jLabel5.setText(resourceMap.getString("jLabel5.text")); // NOI18N
-        jLabel5.setName("jLabel5"); // NOI18N
+        lbl_selectMethod.setText(resourceMap.getString("lbl_selectMethod.text")); // NOI18N
+        lbl_selectMethod.setName("lbl_selectMethod"); // NOI18N
 
         rdo_straightLine.setText(resourceMap.getString("rdo_straightLine.text")); // NOI18N
         rdo_straightLine.setName("rdo_straightLine"); // NOI18N
@@ -187,21 +191,24 @@ public class DepCalcView extends FrameView {
             }
         });
 
-        pnl_schedule.setName("pnl_schedule"); // NOI18N
-
-        javax.swing.GroupLayout pnl_scheduleLayout = new javax.swing.GroupLayout(pnl_schedule);
-        pnl_schedule.setLayout(pnl_scheduleLayout);
-        pnl_scheduleLayout.setHorizontalGroup(
-            pnl_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnl_scheduleLayout.setVerticalGroup(
-            pnl_scheduleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 309, Short.MAX_VALUE)
-        );
-
         btn_clear.setText(resourceMap.getString("btn_clear.text")); // NOI18N
         btn_clear.setName("btn_clear"); // NOI18N
+
+        pnl_schedule.setName("pnl_schedule"); // NOI18N
+
+        tbl_schedule.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl_schedule.setName("tbl_schedule"); // NOI18N
+        pnl_schedule.setViewportView(tbl_schedule);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -209,9 +216,6 @@ public class DepCalcView extends FrameView {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnl_schedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -238,17 +242,19 @@ public class DepCalcView extends FrameView {
                                                         .addComponent(txt_salvageValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(73, 73, 73)
                                                         .addComponent(txt_life, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(74, 74, 74)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(btn_clear))))
-                                    .addComponent(rdo_straightLine)))
+                                    .addComponent(rdo_straightLine))
+                                .addGap(23, 23, 23))
                             .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(264, 264, 264)))
-                        .addGap(0, 84, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(297, 297, 297)
-                .addComponent(btn_calculate)
+                                .addComponent(lbl_selectMethod)
+                                .addGap(264, 264, 264))))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(297, 297, 297)
+                        .addComponent(btn_calculate))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -268,16 +274,15 @@ public class DepCalcView extends FrameView {
                     .addComponent(txt_life, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_clear))
                 .addGap(39, 39, 39)
-                .addComponent(jLabel5)
+                .addComponent(lbl_selectMethod)
                 .addGap(54, 54, 54)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdo_straightLine)
                     .addComponent(rdo_doubleDeclining))
                 .addGap(26, 26, 26)
                 .addComponent(btn_calculate)
-                .addGap(38, 38, 38)
-                .addComponent(pnl_schedule, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -362,13 +367,27 @@ public class DepCalcView extends FrameView {
         int lifeOfItem = Integer.parseInt(txt_life.getText());
         
         if(rdo_straightLine.isSelected()) {
-            method = 0;
+            method = 0; // use straight line method
         } else {
-            method = 1;
+            method = 1; // use double declining method
         }
         
         Asset asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
-        asset.getAnnualDepreciation();
+        
+        double annualDepreciation = asset.getAnnualDepreciation();
+        System.out.println("Annual depreciation = " + annualDepreciation);
+        
+        
+        for(int year = 1; year <= lifeOfItem; year++) {
+            
+            double beginBalance = asset.getBeginningBalance(year, method);
+            double endBalance = asset.getEndingBalance(year, method);
+//            asset.getAnnualDepreciation();
+            
+            System.out.println("Beginning balance = " + beginBalance);
+            System.out.println("Ending balance = " + endBalance);
+        }
+        
   //      asset.getAnnualDepreciation(lifeOfItem);
   //      asset.getBeginningBalance(lifeOfItem, method);
   //      asset.getEndingBalance(lifeOfItem, method);
@@ -387,21 +406,22 @@ public class DepCalcView extends FrameView {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_calculate;
     private javax.swing.JButton btn_clear;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lbl_assetName;
     private javax.swing.JLabel lbl_cost;
     private javax.swing.JLabel lbl_life;
     private javax.swing.JLabel lbl_salvageValue;
+    private javax.swing.JLabel lbl_selectMethod;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.ButtonGroup methodGroup;
-    private javax.swing.JPanel pnl_schedule;
+    private javax.swing.JScrollPane pnl_schedule;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JRadioButton rdo_doubleDeclining;
     private javax.swing.JRadioButton rdo_straightLine;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JTable tbl_schedule;
     private javax.swing.JTextField txt_assetName;
     private javax.swing.JTextField txt_cost;
     private javax.swing.JTextField txt_life;
