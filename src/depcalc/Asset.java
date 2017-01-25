@@ -39,6 +39,12 @@ public class Asset {
         this.salvageValue = salvage;
         this.lifeOfAsset = life;
     }
+    
+    
+    public void build() {
+        
+        
+    }
 
     // Calculate annual depreciation with the straight line method
     public double getAnnualDepreciation() {

@@ -140,6 +140,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_cost">
           <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" resourceKey="txt_Cost.text"/>
             <Property name="toolTipText" type="java.lang.String" resourceKey="txt_Cost.toolTipText"/>
             <Property name="name" type="java.lang.String" value="txt_Cost" noResource="true"/>
@@ -150,6 +151,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_salvageValue">
           <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" resourceKey="txt_salvageValue.text"/>
             <Property name="name" type="java.lang.String" value="txt_salvageValue" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -160,6 +162,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txt_life">
           <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" resourceKey="txt_life.text"/>
             <Property name="name" type="java.lang.String" value="txt_life" noResource="true"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -176,12 +179,18 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdo_straightLine">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="methodGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" resourceKey="rdo_straightLine.text"/>
             <Property name="name" type="java.lang.String" value="rdo_straightLine" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdo_doubleDeclining">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="methodGroup"/>
+            </Property>
             <Property name="text" type="java.lang.String" resourceKey="rdo_doubleDeclining.text"/>
             <Property name="name" type="java.lang.String" value="rdo_doubleDeclining" noResource="true"/>
           </Properties>

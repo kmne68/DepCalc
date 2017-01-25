@@ -157,16 +157,19 @@ public class DepCalcView extends FrameView {
         txt_assetName.setName("txt_assetName"); // NOI18N
         txt_assetName.setPreferredSize(new java.awt.Dimension(60, 20));
 
+        txt_cost.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_cost.setText(resourceMap.getString("txt_Cost.text")); // NOI18N
         txt_cost.setToolTipText(resourceMap.getString("txt_Cost.toolTipText")); // NOI18N
         txt_cost.setName("txt_Cost"); // NOI18N
         txt_cost.setPreferredSize(new java.awt.Dimension(60, 20));
 
+        txt_salvageValue.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_salvageValue.setText(resourceMap.getString("txt_salvageValue.text")); // NOI18N
         txt_salvageValue.setName("txt_salvageValue"); // NOI18N
         txt_salvageValue.setPreferredSize(new java.awt.Dimension(60, 20));
         txt_salvageValue.setRequestFocusEnabled(false);
 
+        txt_life.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_life.setText(resourceMap.getString("txt_life.text")); // NOI18N
         txt_life.setName("txt_life"); // NOI18N
         txt_life.setPreferredSize(new java.awt.Dimension(60, 20));
@@ -175,9 +178,11 @@ public class DepCalcView extends FrameView {
         lbl_selectMethod.setText(resourceMap.getString("lbl_selectMethod.text")); // NOI18N
         lbl_selectMethod.setName("lbl_selectMethod"); // NOI18N
 
+        methodGroup.add(rdo_straightLine);
         rdo_straightLine.setText(resourceMap.getString("rdo_straightLine.text")); // NOI18N
         rdo_straightLine.setName("rdo_straightLine"); // NOI18N
 
+        methodGroup.add(rdo_doubleDeclining);
         rdo_doubleDeclining.setText(resourceMap.getString("rdo_doubleDeclining.text")); // NOI18N
         rdo_doubleDeclining.setName("rdo_doubleDeclining"); // NOI18N
 
