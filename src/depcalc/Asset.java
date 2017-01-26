@@ -28,23 +28,60 @@ public class Asset {
     private boolean built;
     private String errorMessage;  // what is this?
 
+    // Default constructor
     public Asset() {
-
+        this.assetName = "";
+        this.assetCost = 0;
+        this.salvageValue = 0;
+        this.lifeOfAsset = 0;
+        this.built = false;
+        this.errorMessage = "";
     }
-
+    
+    
+    // Overloaded constructor
     public Asset(String name, double cost, double salvage, int life) {
 
         this.assetName = name;
         this.assetCost = cost;
         this.salvageValue = salvage;
         this.lifeOfAsset = life;
+        this.built = false;
+        this.errorMessage = "";
+        
+        if(isValid()) {
+            build();
+        }
     }
-    
+
     
     public void build() {
         
-        
-    }
+        try {
+            this.beginningBalance = new double[this.lifeOfAsset][2];
+            this.annualDepreciation = new double[this.lifeOfAsset][2];
+            this.endingBalance = new double[this.lifeOfAsset][2];
+
+            double depreciationStraightLine = (this.assetCost - this.salvageValue) / this.lifeOfAsset;
+            
+            this.beginningBalance[0][0] = this.assetCost;   // Straight line colimn
+            for (int year = 0; year < this.lifeOfAsset; year++) {
+                
+                if(year > 0) {
+                    this.beginningBalance[year][0] = this.endingBalance[year - 1][0];
+                    
+                }
+                this.annualDepreciation[year][0] = depreciationStraightLine; // Straight line depricaition is the same in all years
+                this.endingBalance[year][0] = this.beginningBalance[year][0] - depreciationStraightLine;
+
+            }
+            built = true;
+            
+        } catch (Exception e) {
+            this.errorMessage = "Build error: " + e.getMessage();
+            this.built = false;
+        }
+    } // end build
 
     // Calculate annual depreciation with the straight line method
     public double getAnnualDepreciation() {
@@ -61,6 +98,20 @@ public class Asset {
         //      System.out.println("annual depreciation = " + annualDepreciation);
         return annualDepreciation;
     } // end getAnnualDep()
+    
+    public double getAnnualDep() {
+        
+        // Straight line depreciation
+        if(!this.built) {
+            if(isValid()) {
+                build();
+            }
+            if (!this.built) {
+                return -1;
+            }
+        }
+        return this.annualDepreciation[0][0];
+    }
 
     public double getAnnualDepreciation(int y) {
 
@@ -161,6 +212,26 @@ public class Asset {
 
     public void setLifeOfItem(int lifeOfItem) {
         this.lifeOfAsset = lifeOfItem;
+    }
+    
+    private boolean isDataValid() {
+        this.errorMessage = "";
+        if (this.assetName.isEmpty()) {
+            this.errorMessage += "Asset name is missing.";
+        }
+        if (this.assetCost <= 0) {
+            this.errorMessage += "Cost is not positive.";
+        }
+        if (this.salvageValue >= this.assetCost) {
+            this.errorMessage += "Salvage is not less than cost.";
+        } 
+        if (this.salvageValue <= 0) {
+            this.errorMessage += "Salvage is not positive.";
+        }
+        if (this.lifeOfAsset <= 0) {
+            this.errorMessage += "Life is not positive";
+        }
+        return this.errorMessage.isEmpty();
     }
 
 }

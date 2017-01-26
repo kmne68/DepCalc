@@ -203,13 +203,10 @@ public class DepCalcView extends FrameView {
 
         tbl_schedule.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tbl_schedule.setName("tbl_schedule"); // NOI18N
@@ -286,7 +283,7 @@ public class DepCalcView extends FrameView {
                     .addComponent(rdo_doubleDeclining))
                 .addGap(26, 26, 26)
                 .addComponent(btn_calculate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
