@@ -70,9 +70,9 @@ public class Asset {
 
             double depreciationStraightLine = (this.assetCost - this.salvageValue) / this.lifeOfAsset;
             
-            double depreciationDoubleDeclining = ((this.assetCost - this.salvageValue) / this.lifeOfAsset) * 2;
+    //        double depreciationDoubleDeclining = ((this.assetCost - this.salvageValue) / this.lifeOfAsset) * 2;
             
-// double depRate =  (1.0 / this.life) * 2.0
+            double depreciationDoubleDeclining =  (1.0 / this.lifeOfAsset) * 2.0;
 
             this.beginningBalance[0][1] = this.assetCost;   // beginning for ddl
             this.beginningBalance[0][0] = this.assetCost;   // Straight line colimn
@@ -81,26 +81,23 @@ public class Asset {
                 
                 
                 
-                // calculate with double declining method; could use while here
-                if((year > 0) && this.endingBalance[year-1][1] > this.salvageValue) {
-                    this.beginningBalance[year][1] = this.endingBalance[year - 1][1];
-                    // this.beginbal[i][1] = this.endbal[i-1][1]
-                }
-                if (depreciationDoubleDeclining > depreciationStraightLine) {
-                    this.annualDepreciation[year][1] = depreciationDoubleDeclining;
-                    // this.anndep[i][1] = beginningbalance[i][1] * depRate;  OK OR USE NEXT LINE
-                    // double depWork = this.begBal[i][1] * depRate
-                    //if (depWork < depSL) {
-                    // depWork = depSL;
-                    //  }
-                    // if(this.begbal[i][1] - depWork) < this.salvage) {
-                    // depWork = this.beginBalance[i][1] - salvage;
-                    // }
-                    // this.annDep[i][1] = depWork;
-                    // this.endBalance[i][1] = this.beginBal[i][1] - this.anndep[i][1];
+                // calculate with double declining method
+
+                    this.beginningBalance[year][1] = this.endingBalance[year-1][1];
+
+            //        this.annualDepreciation[i][1] = beginningBalance[i][1] * depreciationDoubleDeclining;  
+                    double depreciationWork = this.beginningBalance[year][1] * depreciationDoubleDeclining;
+                    if (depreciationWork < depreciationStraightLine) {
+                        depreciationWork = depreciationStraightLine;
+                    }
+                    if((this.beginningBalance[year][1] - depreciationWork) < this.salvageValue) {
+                        depreciationWork = this.beginningBalance[year][1] - salvageValue;
+                    }
+                    this.annualDepreciation[year][1] = depreciationWork;
+                    this.endingBalance[year][1] = this.beginningBalance[year][1] - this.annualDepreciation[year][1];
                     
                     // remember to right justify values.
-                }
+               
                 
                 if(year > 0) {
                     this.beginningBalance[year][0] = this.endingBalance[year - 1][0];                    
@@ -147,18 +144,18 @@ public class Asset {
         return this.annualDepreciation[0][0];
     }
 
-    public double getAnnualDepreciation(int y) {
+    public double getAnnualDepreciation(int year) {
 
-        double annualDepreciation = 0.0;
-        double depreciationRate = 0.0;
-
-        depreciationRate = 2 * (getAnnualDepreciation() / assetCost);
-
-        annualDepreciation = getBeginningBalance(lifeOfAsset, 1) * depreciationRate;
-
-        System.out.println("annualDepreciation = " + annualDepreciation);
-
-        return annualDepreciation;
+        // Double declining depreciation
+        if(!this.built) {
+            if(isValid()) {
+                build();
+            }
+            if(!this.built) {
+                return -1;
+            }                  
+        }
+        return this.annualDepreciation[year - 1][1];  
     } // end getAnnualDep(y)
 
     public double getBeginningBalance(int y, int m) {
