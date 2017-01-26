@@ -5,6 +5,10 @@
  */
 package depcalc;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Keith
@@ -57,6 +61,8 @@ public class Asset {
     
     public void build() {
         
+        // depRate, depWork (temporary)
+               
         try {
             this.beginningBalance = new double[this.lifeOfAsset][2];
             this.annualDepreciation = new double[this.lifeOfAsset][2];
@@ -64,12 +70,40 @@ public class Asset {
 
             double depreciationStraightLine = (this.assetCost - this.salvageValue) / this.lifeOfAsset;
             
+            double depreciationDoubleDeclining = ((this.assetCost - this.salvageValue) / this.lifeOfAsset) * 2;
+            
+// double depRate =  (1.0 / this.life) * 2.0
+
+            this.beginningBalance[0][1] = this.assetCost;   // beginning for ddl
             this.beginningBalance[0][0] = this.assetCost;   // Straight line colimn
+            
             for (int year = 0; year < this.lifeOfAsset; year++) {
                 
-                if(year > 0) {
-                    this.beginningBalance[year][0] = this.endingBalance[year - 1][0];
+                
+                
+                // calculate with double declining method; could use while here
+                if((year > 0) && this.endingBalance[year-1][1] > this.salvageValue) {
+                    this.beginningBalance[year][1] = this.endingBalance[year - 1][1];
+                    // this.beginbal[i][1] = this.endbal[i-1][1]
+                }
+                if (depreciationDoubleDeclining > depreciationStraightLine) {
+                    this.annualDepreciation[year][1] = depreciationDoubleDeclining;
+                    // this.anndep[i][1] = beginningbalance[i][1] * depRate;  OK OR USE NEXT LINE
+                    // double depWork = this.begBal[i][1] * depRate
+                    //if (depWork < depSL) {
+                    // depWork = depSL;
+                    //  }
+                    // if(this.begbal[i][1] - depWork) < this.salvage) {
+                    // depWork = this.beginBalance[i][1] - salvage;
+                    // }
+                    // this.annDep[i][1] = depWork;
+                    // this.endBalance[i][1] = this.beginBal[i][1] - this.anndep[i][1];
                     
+                    // remember to right justify values.
+                }
+                
+                if(year > 0) {
+                    this.beginningBalance[year][0] = this.endingBalance[year - 1][0];                    
                 }
                 this.annualDepreciation[year][0] = depreciationStraightLine; // Straight line depricaition is the same in all years
                 this.endingBalance[year][0] = this.beginningBalance[year][0] - depreciationStraightLine;
@@ -182,16 +216,16 @@ public class Asset {
                     if (lifeOfAsset > 0) {
                         valid = true;
                     } else {
-                        errorMessage = "The life of the asset must be a postive integer.";
+                        errorMessage += "The life of the asset must be a postive integer.";
                     }
                 } else {
-                    errorMessage = "The salvage value must be greater than zero and less than the asset's cost.";
+                    errorMessage += "The salvage value must be greater than zero and less than the asset's cost.";
                 }
             } else {
-                errorMessage = "The asset's cost must be a positive number";
+                errorMessage += "The asset's cost must be a positive number";
             }
         } else {
-            errorMessage = "You have not entered a valid name.";
+            errorMessage += "You have not entered a valid name.";
         }
 
         return valid;
@@ -233,5 +267,51 @@ public class Asset {
         }
         return this.errorMessage.isEmpty();
     }
+    
+    
+    public String setSave(String path) {
 
+        String rmsg = "";        
+        if(!this.built) {
+            if(isValid() ) {
+                build();
+            }
+            if(!this.built) {
+                
+                return "Save requested for non-active asset.";
+            }
+        }
+        
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(path));
+            
+            out.write(this.assetName);
+            out.write(String.valueOf(this.assetCost + "\n"));
+            out.newLine();
+            out.write(String.valueOf(this.salvageValue));
+            out.newLine();
+            out.write(String.valueOf(this.lifeOfAsset));
+            out.close();
+           rmsg = "Files saved to: " + path;
+                    
+        } catch (IOException e) {
+            rmsg = "Unable to create save file.";
+        }
+        return rmsg;
+    }
+    
+    /* build process doesn't deal with double declining.
+    try Dep = Beg. Balance * DDL Rate
+    
+    DDLRate = (1/life) * 2
+    
+    adjust dep 
+        a) if dep < straight line, then dep can be switched to straight line
+        b) if beginBalance - Dep < salvage then adjust dep so result = salvage
+    
+    do above or inside for statement inside build
+    */
+
+    
+    
 }

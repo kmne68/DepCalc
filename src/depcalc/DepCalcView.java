@@ -14,12 +14,18 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * The application's main frame.
  */
 public class DepCalcView extends FrameView {
+    
+    Asset asset;
 
     public DepCalcView(SingleFrameApplication app) {
         super(app);
@@ -129,6 +135,7 @@ public class DepCalcView extends FrameView {
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        jMenuSave = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -198,6 +205,11 @@ public class DepCalcView extends FrameView {
 
         btn_clear.setText(resourceMap.getString("btn_clear.text")); // NOI18N
         btn_clear.setName("btn_clear"); // NOI18N
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
 
         pnl_schedule.setName("pnl_schedule"); // NOI18N
 
@@ -217,46 +229,43 @@ public class DepCalcView extends FrameView {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_assetName)
+                    .addComponent(txt_assetName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_cost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_cost))
+                        .addGap(49, 49, 49)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_assetName)
-                                    .addComponent(txt_assetName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(60, 60, 60)
-                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(17, 17, 17)
+                                .addComponent(lbl_salvageValue)
+                                .addGap(66, 66, 66)
+                                .addComponent(lbl_life))
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(rdo_doubleDeclining)
                                     .addGroup(mainPanelLayout.createSequentialGroup()
-                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txt_cost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lbl_cost))
-                                        .addGap(66, 66, 66)
-                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                                .addComponent(lbl_salvageValue)
-                                                .addGap(66, 66, 66)
-                                                .addComponent(lbl_life))
-                                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(rdo_doubleDeclining)
-                                                    .addGroup(mainPanelLayout.createSequentialGroup()
-                                                        .addComponent(txt_salvageValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(73, 73, 73)
-                                                        .addComponent(txt_life, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btn_clear))))
-                                    .addComponent(rdo_straightLine))
-                                .addGap(23, 23, 23))
-                            .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addComponent(lbl_selectMethod)
-                                .addGap(264, 264, 264))))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(297, 297, 297)
-                        .addComponent(btn_calculate))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txt_salvageValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(73, 73, 73)
+                                        .addComponent(txt_life, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(btn_calculate)
+                                        .addGap(133, 133, 133)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_clear))))
+                    .addComponent(rdo_straightLine)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(lbl_selectMethod)
+                        .addGap(224, 224, 224)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -275,15 +284,15 @@ public class DepCalcView extends FrameView {
                     .addComponent(txt_salvageValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_life, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_clear))
-                .addGap(39, 39, 39)
-                .addComponent(lbl_selectMethod)
                 .addGap(54, 54, 54)
+                .addComponent(lbl_selectMethod)
+                .addGap(39, 39, 39)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdo_straightLine)
                     .addComponent(rdo_doubleDeclining))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(btn_calculate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -295,6 +304,15 @@ public class DepCalcView extends FrameView {
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
+
+        jMenuSave.setText(resourceMap.getString("jMenuSave.text")); // NOI18N
+        jMenuSave.setName("jMenuSave"); // NOI18N
+        jMenuSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSaveActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuSave);
 
         menuBar.add(fileMenu);
 
@@ -349,6 +367,8 @@ public class DepCalcView extends FrameView {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+    // DefaultTableCellRenderer rend = (DefaultTableCellRenderer) tbl_schedule.getDefaultRenderer(Object.class);
+    // rend.setHorizontalAlignment(JLabel.RIGHT);
     
     /**
      * 
@@ -374,7 +394,7 @@ public class DepCalcView extends FrameView {
             method = 1; // use double declining method
         }
         
-        Asset asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
+        asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
         
         double annualDepreciation = asset.getAnnualDepreciation();
         System.out.println("Annual depreciation = " + annualDepreciation);
@@ -404,10 +424,47 @@ public class DepCalcView extends FrameView {
         System.out.println("method " + method);
     }//GEN-LAST:event_btn_calculateActionPerformed
 
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        
+        statusMessageLabel.setText("");
+        txt_assetName.setText("");
+        txt_cost.setText("");
+        txt_life.setText("");
+        
+        tbl_schedule.setModel(new DefaultTableModel());
+        methodGroup.clearSelection();                
+        txt_assetName.requestFocusInWindow();
+    }//GEN-LAST:event_btn_clearActionPerformed
+
+    private void jMenuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSaveActionPerformed
+        
+        statusMessageLabel.setText("");
+        
+        JFileChooser f = new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files (*.txt", "txt");
+        f.setFileFilter(filter);
+        f.setDialogTitle("Save Asset to file");
+        JDialog dg = new JDialog();
+        int rval = f.showSaveDialog(dg);
+        
+        if(rval == JFileChooser.CANCEL_OPTION) {
+            statusMessageLabel.setText("Save canceled.");            
+        } else {
+            String path = f.getSelectedFile().getAbsolutePath();
+            statusMessageLabel.setText(asset.setSave(path));
+        }
+        
+        
+        
+    }//GEN-LAST:event_jMenuSaveActionPerformed
+
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_calculate;
     private javax.swing.JButton btn_clear;
+    private javax.swing.JMenuItem jMenuSave;
     private javax.swing.JLabel lbl_assetName;
     private javax.swing.JLabel lbl_cost;
     private javax.swing.JLabel lbl_life;
