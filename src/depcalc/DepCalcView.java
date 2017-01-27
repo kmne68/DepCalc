@@ -4,6 +4,7 @@
 
 package depcalc;
 
+import Business.Asset;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -11,6 +12,7 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
@@ -32,10 +34,7 @@ public class DepCalcView extends FrameView {
 
         initComponents();
         
-        // Schedule column names
-        String[] columnNames = {"Year", "Asset Name", "Beginning Value", "Annual Depreciation", "Ending Value"};
-        
-        // add buttons to radio group
+   // add buttons to radio group
         methodGroup.add(rdo_straightLine);
         methodGroup.add(rdo_doubleDeclining);
 
@@ -381,47 +380,68 @@ public class DepCalcView extends FrameView {
      */
     private void btn_calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calculateActionPerformed
         
-        String method = ""; // local method to select calculation method
-        boolean valid;
         String assetName = txt_assetName.getText();
-        double assetCost = Double.parseDouble(txt_cost.getText());
-        double salvageValue = Double.parseDouble(txt_salvageValue.getText());
-        int lifeOfItem = Integer.parseInt(txt_life.getText());
+        String method = ""; // local method to select calculation method
+        
+        boolean valid;
+        double assetCost = 0.0;
+        double salvageValue = 0.0;
+        int lifeOfItem = 0;
+        
+        try {            
+            assetCost = Double.parseDouble(txt_cost.getText());
+        } catch (NumberFormatException e) {
+            statusMessageLabel.setText("Cost field error: " + e.getMessage());
+            txt_cost.requestFocusInWindow();
+            return;
+        }
+        
+        try {
+            salvageValue = Double.parseDouble(txt_salvageValue.getText());
+        } catch (NumberFormatException e) {
+            statusMessageLabel.setText("Salvage value field error: " + e.getMessage());
+            txt_salvageValue.requestFocusInWindow();
+            return;
+        }
+        
+        try {
+            lifeOfItem = Integer.parseInt(txt_life.getText());
+        } catch (NumberFormatException e) {
+            statusMessageLabel.setText("Life of item field error: " + e.getMessage());
+            txt_life.requestFocusInWindow();
+            return;
+        }        
+        
         
         if(rdo_straightLine.isSelected()) {
             method = "S"; // use straight line method
-        } else {
+        } else if (rdo_doubleDeclining.isSelected()) {
             method = "D"; // use double declining method
+        } else {
+            statusMessageLabel.setText("Unknown depreciation type.");
         }
         
         asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
         
-        double annualDepreciation = asset.getAnnualDepreciation();
-        System.out.println("Annual depreciation = " + annualDepreciation);
+        // Schedule column names
+        String[] columnNames = {"Year", "Beginning Balance", "Annual Depreciation", "Ending Balance"};
+        String[][] tableValues = new String[asset.getLifeOfItem()][4];
+
+        DefaultTableModel model = new DefaultTableModel(tableValues, columnNames);
+        tbl_schedule.setModel(model);
         
-        
-        for(int year = 1; year <= lifeOfItem; year++) {
-            
-            double beginBalance = asset.getBeginningBalance(year, method);
-            double endBalance = asset.getEndingBalance(year, method);
-//            asset.getAnnualDepreciation();
-            
-            System.out.println("Beginning balance = " + beginBalance);
-            System.out.println("Ending balance = " + endBalance);
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        for(int year = 1; year <= asset.getLifeOfItem(); year++) {
+            tbl_schedule.setValueAt(year, year - 1, 0);
+            tbl_schedule.setValueAt(currency.format(asset.getBeginningBalance(year, method)), year - 1, 1);
+            if(method.equalsIgnoreCase("S")) {
+                tbl_schedule.setValueAt(currency.format(asset.getAnnualDep()), year - 1, 2);
+            } else {
+                tbl_schedule.setValueAt(currency.format(asset.getAnnualDepreciation(year)), year - 1, 2);
+            }
+            tbl_schedule.setValueAt(currency.format(asset.getEndingBalance(year, method)), year - 1, 3); 
         }
         
-  //      asset.getAnnualDepreciation(lifeOfItem);
-  //      asset.getBeginningBalance(lifeOfItem, method);
-  //      asset.getEndingBalance(lifeOfItem, method);
-        valid = asset.isValid();
-        
-        System.out.println("name " + assetName);
-        System.out.println("cost " + assetCost);
-        System.out.println("salvage " + salvageValue);
-        System.out.println("life " + lifeOfItem);
-        System.out.println("valid " + valid);
-        System.out.println(asset.getErrorMessage());
-        System.out.println("method " + method);
     }//GEN-LAST:event_btn_calculateActionPerformed
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed

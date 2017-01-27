@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package depcalc;
+package Business;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -85,7 +85,7 @@ public class Asset {
 
                     this.beginningBalance[year][1] = this.endingBalance[year-1][1];
 
-            //        this.annualDepreciation[i][1] = beginningBalance[i][1] * depreciationDoubleDeclining;  
+             //       this.annualDepreciation[year][1] = beginningBalance[year][1] * depreciationDoubleDeclining;
                     double depreciationWork = this.beginningBalance[year][1] * depreciationDoubleDeclining;
                     if (depreciationWork < depreciationStraightLine) {
                         depreciationWork = depreciationStraightLine;
@@ -232,7 +232,7 @@ public class Asset {
     }
 
     // Validate data
-    public boolean isValid() {
+ /*  public boolean isValid() {
 
         boolean valid = false;
 
@@ -258,7 +258,7 @@ public class Asset {
 
         return valid;
 
-    }
+    } */
 
     public void setAssetName(String assetName) {
         this.assetName = assetName;
@@ -276,7 +276,7 @@ public class Asset {
         this.lifeOfAsset = lifeOfItem;
     }
     
-    private boolean isDataValid() {
+    private boolean isValid() {
         this.errorMessage = "";
         if (this.assetName.isEmpty()) {
             this.errorMessage += "Asset name is missing.";
