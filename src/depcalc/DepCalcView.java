@@ -381,7 +381,7 @@ public class DepCalcView extends FrameView {
      */
     private void btn_calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calculateActionPerformed
         
-        int method = 0; // local method to select calculation method
+        String method = ""; // local method to select calculation method
         boolean valid;
         String assetName = txt_assetName.getText();
         double assetCost = Double.parseDouble(txt_cost.getText());
@@ -389,9 +389,9 @@ public class DepCalcView extends FrameView {
         int lifeOfItem = Integer.parseInt(txt_life.getText());
         
         if(rdo_straightLine.isSelected()) {
-            method = 0; // use straight line method
+            method = "S"; // use straight line method
         } else {
-            method = 1; // use double declining method
+            method = "D"; // use double declining method
         }
         
         asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);

@@ -155,30 +155,61 @@ public class Asset {
                 return -1;
             }                  
         }
+        if(year < 1 || year > this.lifeOfAsset) {
+            this.errorMessage = "Value requested for year out of range.";
+            return -1;
+        }
         return this.annualDepreciation[year - 1][1];  
     } // end getAnnualDep(y)
+    
 
-    public double getBeginningBalance(int y, int m) {
+    public double getBeginningBalance(int year, String method) {
 
-        double beginningBalance = 0;
-        int year = y - 1;
-        beginningBalance = assetCost - (getAnnualDepreciation() * year);
-        
-        return beginningBalance;
+        if(!this.built) {
+            if(isValid()) {
+                build();
+            }
+            if(!this.built) {
+                return -1;
+            }            
+        }
+        if(year < 1 || year > this.lifeOfAsset) {
+            this.errorMessage = "Value requested for year out of range.";
+        }
+        if(method.equalsIgnoreCase("S")) {
+            return this.beginningBalance[year-1][0];
+        } else if (method.equalsIgnoreCase("D")) {
+                return this.beginningBalance[year - 1][1];
+        } else {
+            this.errorMessage = "Value requested for illegal depreciation method.";
+            return - 1;
+        }        
+    } // end getBegBal()
+    
+    
+        public double getEndingBalance(int year, String method) {
+
+        if(!this.built) {
+            if(isValid()) {
+                build();
+            }
+            if(!this.built) {
+                return -1;
+            }            
+        }
+        if(year < 1 || year > this.lifeOfAsset) {
+            this.errorMessage = "Value requested for year out of range.";
+        }
+        if(method.equalsIgnoreCase("S")) {
+            return this.endingBalance[year-1][0];
+        } else if (method.equalsIgnoreCase("D")) {
+            return this.endingBalance[year - 1][1];
+        } else {
+            this.errorMessage = "Value requested for illegal depreciation method.";
+            return - 1;
+        }        
     } // end getBegBal()
 
-    public double getEndingBalance(int y, int m) {
-
-        double endingBalance = 0;
-
-        if ((m == 1) && (y == 1)) {
-            endingBalance = assetCost;
-        } else {
-            endingBalance = assetCost - (getAnnualDepreciation() * y);
-        }
-
-        return endingBalance;
-    }
 
     public String getAssetName() {
         return assetName;
