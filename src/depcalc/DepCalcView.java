@@ -18,6 +18,7 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -33,6 +34,9 @@ public class DepCalcView extends FrameView {
         super(app);
 
         initComponents();
+        tbl_schedule.setName(null);
+     //   DefaultTableCellRenderer rend = (DefaultTableCellRenderer) tbl_schedule.getDefaultRenderer(Object.class);
+     //   rend.setHorizontalAlignment(JLabel.RIGHT);
         
    // add buttons to radio group
         methodGroup.add(rdo_straightLine);
@@ -181,6 +185,7 @@ public class DepCalcView extends FrameView {
         txt_life.setPreferredSize(new java.awt.Dimension(60, 20));
         txt_life.setRequestFocusEnabled(false);
 
+        lbl_selectMethod.setForeground(resourceMap.getColor("lbl_selectMethod.foreground")); // NOI18N
         lbl_selectMethod.setText(resourceMap.getString("lbl_selectMethod.text")); // NOI18N
         lbl_selectMethod.setName("lbl_selectMethod"); // NOI18N
 
@@ -292,7 +297,8 @@ public class DepCalcView extends FrameView {
                 .addGap(18, 18, 18)
                 .addComponent(btn_calculate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnl_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -366,8 +372,7 @@ public class DepCalcView extends FrameView {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
-    // DefaultTableCellRenderer rend = (DefaultTableCellRenderer) tbl_schedule.getDefaultRenderer(Object.class);
-    // rend.setHorizontalAlignment(JLabel.RIGHT);
+     
     
     /**
      * 
@@ -383,10 +388,9 @@ public class DepCalcView extends FrameView {
         String assetName = txt_assetName.getText();
         String method = ""; // local method to select calculation method
         
-        boolean valid;
-        double assetCost = 0.0;
-        double salvageValue = 0.0;
-        int lifeOfItem = 0;
+        double assetCost;
+        double salvageValue;
+        int lifeOfItem;
         
         try {            
             assetCost = Double.parseDouble(txt_cost.getText());
@@ -419,6 +423,7 @@ public class DepCalcView extends FrameView {
             method = "D"; // use double declining method
         } else {
             statusMessageLabel.setText("Unknown depreciation type.");
+            return;
         }
         
         asset = new Asset(assetName, assetCost, salvageValue, lifeOfItem);
@@ -435,13 +440,13 @@ public class DepCalcView extends FrameView {
             tbl_schedule.setValueAt(year, year - 1, 0);
             tbl_schedule.setValueAt(currency.format(asset.getBeginningBalance(year, method)), year - 1, 1);
             if(method.equalsIgnoreCase("S")) {
-                tbl_schedule.setValueAt(currency.format(asset.getAnnualDep()), year - 1, 2);
+                tbl_schedule.setValueAt(currency.format(asset.getAnnualDepreciation()), year - 1, 2);
             } else {
                 tbl_schedule.setValueAt(currency.format(asset.getAnnualDepreciation(year)), year - 1, 2);
             }
             tbl_schedule.setValueAt(currency.format(asset.getEndingBalance(year, method)), year - 1, 3); 
         }
-        
+        System.out.println("Test value: " + asset.getAnnualDepreciation(1));
     }//GEN-LAST:event_btn_calculateActionPerformed
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
@@ -449,6 +454,7 @@ public class DepCalcView extends FrameView {
         statusMessageLabel.setText("");
         txt_assetName.setText("");
         txt_cost.setText("");
+        txt_salvageValue.setText("");
         txt_life.setText("");
         
         tbl_schedule.setModel(new DefaultTableModel());
