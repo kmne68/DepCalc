@@ -12,7 +12,9 @@ import java.io.IOException;
 /**
  *
  * @author Keith Emery
- *
+ * Project 1
+ * IS 287
+ * Spring 2017
  * Beginning Balance in year 1 equals cost. Annual depreciation is rate * cost.
  *
  */
@@ -60,20 +62,14 @@ public class Asset {
 
     public void build() {
 
-        System.out.println("Outside try in build()");
         // depRate, depWork (temporary)
         try {
-            System.out.println("Inside try in build()");
             this.beginningBalance = new double[this.lifeOfAsset][2];
             this.annualDepreciation = new double[this.lifeOfAsset][2];
             this.endingBalance = new double[this.lifeOfAsset][2];
 
             double depreciationStraightLine = (this.assetCost - this.salvageValue) / this.lifeOfAsset;
             double depreciationDoubleDeclining = (1.0 / this.lifeOfAsset) * 2.0;
-
-            System.out.println("SL Depreciation: " + depreciationStraightLine);
-            System.out.println("DD depreciation: " + depreciationDoubleDeclining);
-            //        double depreciationDoubleDeclining = ((this.assetCost - this.salvageValue) / this.lifeOfAsset) * 2;
 
             this.beginningBalance[0][0] = this.assetCost;   // beginning straight line           
             this.beginningBalance[0][1] = this.assetCost;   // beginning for double declining
@@ -85,9 +81,6 @@ public class Asset {
                 }
                 this.annualDepreciation[year][0] = depreciationStraightLine; // Straight line depricaition is the same in all years
                 this.endingBalance[year][0] = this.beginningBalance[year][0] - depreciationStraightLine;
-
-                System.out.println("Annual dep: " + annualDepreciation[year][0]);
-                System.out.println("endingBal: " + endingBalance[year][0]);
                 
                 // calculate with double declining method
                 if(year > 0) {
@@ -112,47 +105,20 @@ public class Asset {
         }
     } // end build
 
-    // Calculate annual depreciation with the straight line method
- //   public double getAnnualDepreciation() {
-
-   //     int year = 1;
-     //   double annualDepreciation = 0;
-
-       // if (year == 1) {
-
-   //     }
-
-   //     annualDepreciation = (assetCost - salvageValue) / lifeOfAsset;
-
-        //      System.out.println("annual depreciation = " + annualDepreciation);
-   //     return annualDepreciation;
-   // } // end getAnnualDepreciation()
 
     public double getAnnualDepreciation() {
 
         // Straight line depreciation
-        if (!this.built) {
-            if (isValid()) {
-                build();
-            }
-            if (!this.built) {
-                return -1;
-            }
-        }
+        if (isBuilt())
         return this.annualDepreciation[0][0];
+        else
+            return -1;
     }
 
     public double getAnnualDepreciation(int year) {
 
         // Double declining depreciation
-        if (!this.built) {
-            if (isValid()) {
-                build();
-            }
-            if (!this.built) {
-                return -10;
-            }
-        }
+        isBuilt();
         if (year < 1 || year > this.lifeOfAsset) {
             this.errorMessage = "Value requested for year out of range.";
             return -100;
@@ -162,14 +128,8 @@ public class Asset {
 
     public double getBeginningBalance(int year, String method) {
 
-        if (!this.built) {
-            if (isValid()) {
-                build();
-            }
-            if (!this.built) {
-                return -1;
-            }
-        }
+        isBuilt();
+
         if (year < 1 || year > this.lifeOfAsset) {
             this.errorMessage = "Value requested for year out of range.";
             return -1;
@@ -186,14 +146,8 @@ public class Asset {
 
     public double getEndingBalance(int year, String method) {
 
-        if (!this.built) {
-            if (isValid()) {
-                build();
-            }
-            if (!this.built) {
-                return -1;
-            }
-        }
+        isBuilt();
+ 
         if (year < 1 || year > this.lifeOfAsset) {
             this.errorMessage = "Value requested for year out of range.";
             return -1;
@@ -227,35 +181,21 @@ public class Asset {
     public int getLifeOfItem() {
         return lifeOfAsset;
     }
-
-    // Validate data
-    /*  public boolean isValid() {
-
-        boolean valid = false;
-
-        System.out.println("validName " + assetName + "\n" + assetCost + "\n" + salvageValue + "\n" + lifeOfAsset);
-
-        if (assetName != null && !assetName.isEmpty()) {
-            if (assetCost > 0) {
-                if (salvageValue > 0 && salvageValue < assetCost) {
-                    if (lifeOfAsset > 0) {
-                        valid = true;
-                    } else {
-                        errorMessage += "The life of the asset must be a postive integer.";
-                    }
-                } else {
-                    errorMessage += "The salvage value must be greater than zero and less than the asset's cost.";
-                }
-            } else {
-                errorMessage += "The asset's cost must be a positive number";
+    
+    public boolean isBuilt() {
+        
+        if (!this.built) {
+            if (isValid()) {
+                build();
             }
-        } else {
-            errorMessage += "You have not entered a valid name.";
+            if (!this.built) {
+                return false;
+            }
         }
+        return true;
+    }
 
-        return valid;
 
-    } */
     public void setAssetName(String assetName) {
         this.assetName = assetName;
     }
@@ -295,15 +235,7 @@ public class Asset {
     public String setSave(String path) {
 
         String rmsg = "";
-        if (!this.built) {
-            if (isValid()) {
-                build();
-            }
-            if (!this.built) {
-
-                return "Save requested for non-active asset.";
-            }
-        }
+        isBuilt();
 
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(path));
@@ -319,8 +251,9 @@ public class Asset {
 
         } catch (IOException e) {
             rmsg = "Unable to create save file.";
-        }
+        } 
         return rmsg;
+        
     }
 
     /* build process doesn't deal with double declining.
